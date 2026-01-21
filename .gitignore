@@ -42,3 +42,9 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Backend C# / .NET
+backend-api/bin/
+backend-api/obj/
+backend-api/*.log
+backend-api/.vs/

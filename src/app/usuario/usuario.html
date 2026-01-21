@@ -1,0 +1,33 @@
+<h2>Gestión de Usuarios</h2>
+
+<input [(ngModel)]="nombre" name="nombre" placeholder="Nombre" />
+<button (click)="agregarUsuario()">Agregar</button>
+<button (click)="listarUsuarios()">Listar</button>
+<button (click)="visible = !visible">Mostrar/Ocultar</button>
+
+<ul *ngIf="visible && listUsuarios.length > 0; else noData">
+  <li *ngFor="let u of listUsuarios">{{ u.nombre }}</li>
+</ul>
+
+<ng-template #noData>
+  <p>No hay usuarios registrados.</p>
+</ng-template>
+
+<!-- Sección de Tareas -->
+<hr style="margin: 3rem 0; border: none; border-top: 2px solid #e2e8f0;">
+
+<div class="tareas-section">
+  <h2>Formularios de Tareas</h2>
+  
+  <div class="tareas-grid">
+    <div class="tarea-wrapper">
+      <h3>Template-Driven Form</h3>
+      <app-tarea-tdf></app-tarea-tdf>
+    </div>
+    
+    <div class="tarea-wrapper">
+      <h3>Reactive Form</h3>
+      <app-tarea-form></app-tarea-form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="tarea-container">
+  <h2>Gestión de Tareas (Reactive Form)</h2>
+
+  <div class="form-card">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input 
+          id="titulo" 
+          formControlName="titulo"
+          placeholder="Ingresa el título de la tarea">
+      </div>
+
+      <div class="error-messages" *ngIf="form.controls['titulo'].touched && form.controls['titulo'].invalid">
+        <small class="error" *ngIf="form.controls['titulo'].errors?.['required']">
+          ⚠️ Título requerido.
+        </small>
+        <small class="error" *ngIf="form.controls['titulo'].errors?.['minlength']">
+          ⚠️ Mínimo 3 caracteres.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea 
+          id="descripcion" 
+          formControlName="descripcion"
+          rows="4"
+          placeholder="Describe la tarea..."></textarea>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label>
+          <input type="checkbox" formControlName="completada">
+          <span>Completada</span>
+        </label>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid">Guardar Tarea</button>
+    </form>
+  </div>
+
+  <!-- Lista de tareas -->
+  <div class="tareas-list" *ngIf="tareas.length > 0">
+    <h3>📋 Tareas Guardadas ({{tareas.length}})</h3>
+    <ul>
+      <li *ngFor="let t of tareas; let i = index" 
+          class="tarea-item"
+          [class.completada]="t.completada">
+        <div class="tarea-content">
+          <div class="tarea-header">
+            <span class="tarea-titulo">{{ t.titulo }}</span>
+            <span class="badge" [class.badge-completada]="t.completada">
+              {{ t.completada ? '✓ Completada' : '⏳ Pendiente' }}
+            </span>
+          </div>
+          <p class="tarea-descripcion" *ngIf="t.descripcion">{{ t.descripcion }}</p>
+        </div>
+        <div class="tarea-actions">
+          <button type="button" class="btn-toggle" (click)="toggleCompletada(i)">
+            {{ t.completada ? '↩️ Desmarcar' : '✓ Completar' }}
+          </button>
+          <button type="button" class="btn-eliminar" (click)="eliminarTarea(i)">
+            🗑️ Eliminar
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="no-tareas" *ngIf="tareas.length === 0">
+    <p>📝 No hay tareas guardadas. ¡Agrega tu primera tarea!</p>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="tarea-container">
+  <h2>Gestión de Tareas</h2>
+
+  <div class="form-card">
+    <form #f="ngForm" (ngSubmit)="guardar()">
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input 
+          id="titulo" 
+          name="titulo" 
+          [(ngModel)]="tarea.titulo" 
+          required 
+          minlength="3"
+          placeholder="Ingresa el título de la tarea">
+      </div>
+
+      <div class="error-messages" *ngIf="f.submitted && (!f.controls['titulo']?.valid)">
+        <small class="error" *ngIf="f.controls['titulo']?.errors?.['required']">
+          ⚠️ El título es obligatorio.
+        </small>
+        <small class="error" *ngIf="f.controls['titulo']?.errors?.['minlength']">
+          ⚠️ Debe tener al menos 3 caracteres.
+        </small>
+      </div>
+
+      <button type="submit" [disabled]="f.invalid">Guardar Tarea</button>
+    </form>
+  </div>
+
+  <!-- Lista de tareas -->
+  <div class="tareas-list" *ngIf="tareas.length > 0">
+    <h3>📋 Tareas Guardadas ({{tareas.length}})</h3>
+    <ul>
+      <li *ngFor="let t of tareas; let i = index" class="tarea-item">
+        <span class="tarea-titulo">{{ t.titulo }}</span>
+        <button type="button" class="btn-eliminar" (click)="eliminarTarea(i)">
+          🗑️ Eliminar
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="no-tareas" *ngIf="tareas.length === 0">
+    <p>📝 No hay tareas guardadas. ¡Agrega tu primera tarea!</p>
+  </div>
+</div>
